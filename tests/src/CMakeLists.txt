@@ -1,2 +1,2 @@
-target_sources(TemplateUnitTests PRIVATE
+target_sources(MemoryAllocatorUnitTests PRIVATE
 	"unit_test/HelloTest.cpp")

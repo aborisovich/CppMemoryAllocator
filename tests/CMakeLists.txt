@@ -8,14 +8,14 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(TemplateUnitTests)
-set_target_properties(TemplateUnitTests PROPERTIES CXX_STANDARD 17)
-target_link_libraries(TemplateUnitTests PRIVATE TemplateSources)
+add_executable(MemoryAllocatorUnitTests)
+set_target_properties(MemoryAllocatorUnitTests PROPERTIES CXX_STANDARD 17)
+target_link_libraries(MemoryAllocatorUnitTests PRIVATE MemoryAllocatorSources)
 
 add_subdirectory(include)
 add_subdirectory(src)
 
-target_link_libraries(TemplateUnitTests PRIVATE gtest gtest_main gmock)
+target_link_libraries(MemoryAllocatorUnitTests PRIVATE gtest gtest_main gmock)
 
 include(GoogleTest)
-gtest_discover_tests(TemplateUnitTests)
+gtest_discover_tests(MemoryAllocatorUnitTests)

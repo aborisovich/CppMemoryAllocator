@@ -1,13 +1,13 @@
 cmake_minimum_required (VERSION 3.22)
 
-project(Template DESCRIPTION "Template C++ project" LANGUAGES CXX)
+project(CppMemoryAllocator DESCRIPTION "Custom memory allocator" LANGUAGES CXX)
 
-add_executable(Template)
+add_executable(MemoryAllocator)
 
-add_library(TemplateSources INTERFACE)
+add_library(MemoryAllocatorSources INTERFACE)
 
-target_compile_options(TemplateSources INTERFACE "$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
-set_target_properties(TemplateSources PROPERTIES CXX_STANDARD 17)
+target_compile_options(MemoryAllocatorSources INTERFACE "$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+set_target_properties(MemoryAllocatorSources PROPERTIES CXX_STANDARD 17)
 
 add_subdirectory(include)
 add_subdirectory(src)
@@ -15,4 +15,4 @@ add_subdirectory(src)
 enable_testing()
 add_subdirectory(tests)
 
-target_link_libraries(Template PRIVATE TemplateSources)
+target_link_libraries(MemoryAllocator PRIVATE MemoryAllocatorSources)
