@@ -1,0 +1,107 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "windows-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "linux-base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "sourceDir": "$env{HOME}/workspace/$ms{projectDirName}",
+          "intelliSenseMode": "linux-gcc-x64"
+        }
+      }
+    },
+    {
+      "name": "x64-debug-windows",
+      "displayName": "x64 Debug Windows",
+      "inherits": "windows-base",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-msvc-x64"
+        }
+      }
+    },
+    {
+      "name": "x64-debug-linux",
+      "displayName": "x64 Debug Linux",
+      "inherits": "linux-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_SYSTEM_PROCESSOR": "x86_64",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "x64-debug-windows",
+      "displayName": "x64 Debug Windows",
+      "configurePreset": "x64-debug-windows"
+    },
+    {
+      "name": "x64-debug-linux",
+      "displayName": "x64 Debug Linux",
+      "configurePreset": "x64-debug-linux"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "x64-debug-windows",
+      "displayName": "x64 Debug Windows",
+      "description": "Executes unit tests for x64 Debug Windows configuration",
+      "configurePreset": "x64-debug-windows",
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false,
+        "scheduleRandom": true,
+        "timeout": 600
+      }
+    },
+    {
+      "name": "x64-debug-linux",
+      "displayName": "x64 Debug Linux",
+      "description": "Executes unit tests for x64 Debug Linux configuration",
+      "configurePreset": "x64-debug-linux",
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false,
+        "scheduleRandom": true,
+        "timeout": 600
+      }
+    }
+  ]
+}

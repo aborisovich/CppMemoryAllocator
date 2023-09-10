@@ -1,0 +1,24 @@
+name: Style conformance
+
+on:
+  pull_request:
+    branches:
+      - main
+  # Allows to run this workflow from Actions tab
+  workflow_dispatch:
+
+# Specifies group name that stops previous wokrflows if the name matches
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.head_ref || github.ref }}
+
+jobs:
+  style_check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout pull request HEAD
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - uses: editorconfig-checker/action-editorconfig-checker@main
+    - run: editorconfig-checker

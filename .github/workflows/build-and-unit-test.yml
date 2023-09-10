@@ -1,0 +1,111 @@
+name: Build and unit test
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  # Allows to run this workflow from Actions tab
+  workflow_dispatch:
+    # Allow this workflow to be run from other workflows
+  workflow_call:
+
+# Specifies group name that stops previous wokrflows if the name matches
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.head_ref || github.ref }}
+
+jobs:
+  build_linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Setup Ninja
+      run: sudo apt -y install ninja-build
+
+    - name: Checkout pull request HEAD
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    - name: Configure CMake
+      working-directory: ${{github.workspace}}
+      run: cmake --preset x64-debug-linux
+
+    - name: Build
+      working-directory: ${{github.workspace}}
+      run: cmake --build --preset x64-debug-linux
+
+    - name: Upload Linux build artifacts
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: linux-build-artifacts
+        path: ${{github.workspace}}/build
+
+  run_unit_tests_linux:
+    needs: build_linux
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout pull request HEAD
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    - name: Download Linux build artifacts
+      uses: actions/download-artifact@v3.0.1
+      with:
+        name: linux-build-artifacts
+        path: ${{github.workspace}}/build
+
+    - name: Relax build artifacts permissions
+      run: sudo chmod 777 -R ${{github.workspace}}/build
+
+    - name: Run Unit Tests
+      working-directory: ${{github.workspace}}
+      run: ctest --preset x64-debug-linux
+
+
+  build_windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Enable Developer Command Prompt
+      uses: ilammy/msvc-dev-cmd@v1.12.0
+      with:
+        arch: amd64
+
+    - name: Checkout pull request HEAD
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    - name: Configure CMake
+      working-directory: ${{github.workspace}}
+      run: cmake --preset x64-debug-windows
+
+    - name: Build
+      working-directory: ${{github.workspace}}
+      run: cmake --build --preset x64-debug-windows
+
+    - name: Upload Windows build artifacts
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        name: windows-build-artifacts
+        path: ${{github.workspace}}\build
+
+  run_unit_tests_windows:
+    needs: build_windows
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout pull request HEAD
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    - name: Download Windows build artifacts
+      uses: actions/download-artifact@v3.0.1
+      with:
+        name: windows-build-artifacts
+        path: ${{github.workspace}}\build
+
+    - name: Run Unit Tests
+      working-directory: ${{github.workspace}}
+      run: ctest --preset x64-debug-windows
