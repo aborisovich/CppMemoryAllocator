@@ -1,0 +1,9 @@
+/**
+ * @file MyAllocatorConfig.h
+ * @copyright 2023 Andrey Borisovich. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @author Andrey Borisovich
+ */
+#pragma once
+
+#cmakedefine01 OVERRIDE_NEW_AND_DELETE

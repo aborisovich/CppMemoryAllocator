@@ -22,8 +22,8 @@ indent_style = tab
 indent_size = tab
 tab_size = 4
 
-# C++ code files (note '.h' files not on the list to avoid C headers)
-[*.{c++,cc,cpp,cppm,cxx,h++,hh,hpp,hxx,inl,ipp,ixx,tlh,tli}]
+# C++ code files
+[*.{c++,cc,cpp,cppm,cxx,h,h++,hh,hpp,hxx,inl,ipp,ixx,tlh,tli}]
 
 # Doxygen documentation style settings - javadoc
 cpp_generate_documentation_comments = doxygen_slash_star

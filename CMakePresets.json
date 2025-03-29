@@ -1,5 +1,10 @@
 {
-  "version": 3,
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
   "configurePresets": [
     {
       "name": "windows-base",
@@ -31,6 +36,9 @@
         "rhs": "Linux"
       },
       "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [ "Linux" ]
+        },
         "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
           "sourceDir": "$env{HOME}/workspace/$ms{projectDirName}",
           "intelliSenseMode": "linux-gcc-x64"
@@ -71,6 +79,12 @@
       "name": "x64-debug-windows",
       "displayName": "x64 Debug Windows",
       "configurePreset": "x64-debug-windows"
+    },
+    {
+      "name": "x64-debug-windows-rebuild",
+      "displayName": "x64 Debug Windows Rebuild",
+      "inherits": "x64-debug-windows",
+      "cleanFirst": true
     },
     {
       "name": "x64-debug-linux",
