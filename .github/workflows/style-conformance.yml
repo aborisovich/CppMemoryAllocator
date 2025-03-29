@@ -10,6 +10,7 @@ on:
 # Specifies group name that stops previous wokrflows if the name matches
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   style_check:
@@ -17,7 +18,7 @@ jobs:
 
     steps:
     - name: Checkout pull request HEAD
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.event.pull_request.head.sha }}
     - uses: editorconfig-checker/action-editorconfig-checker@main

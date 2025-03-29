@@ -1,0 +1,9 @@
+/**
+ * @file HeapMemoryTrackerConfig.h
+ * @copyright 2023 Andrey Borisovich. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @author Andrey Borisovich
+ */
+#pragma once
+
+#cmakedefine MEMORY_POOL_SIZE_BYTES @MEMORY_POOL_SIZE_BYTES@

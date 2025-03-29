@@ -1,5 +1,14 @@
-target_include_directories(MemoryAllocatorSources INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+#
+# Copyright(c) 2023 Andrey Borisovich. All rights reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+if(NOT OVERRIDE_NEW_AND_DELETE)
+	set(OVERRIDE_NEW_AND_DELETE "")
+endif()
+configure_file(MemoryManager/MyAllocatorConfig.h.in MemoryManager/MyAllocatorConfig.h @ONLY)
+configure_file(MemoryManager/HeapMemoryTrackerConfig.h.in MemoryManager/HeapMemoryTrackerConfig.h @ONLY)
 
-# Include headers in target_sources to define inclusions between targets
-target_sources(MemoryAllocatorSources INTERFACE
-	template/Hello.hpp)
+target_include_directories(MemoryManagerSources INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(MemoryManagerSources INTERFACE ${CMAKE_CURRENT_BINARY_DIR})
+

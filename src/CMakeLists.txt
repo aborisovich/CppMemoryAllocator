@@ -1,5 +1,11 @@
-target_sources(MemoryAllocator PRIVATE main.cpp)
+#
+# Copyright(c) 2023 Andrey Borisovich. All rights reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+target_sources(MemoryManagerSources INTERFACE
+	MyAllocator.cpp
+	HeapMemoryTracker.cpp
+	PoolOutOfMemoryException.cpp)
 
-# tests implement their own main function - not adding main.cpp here
-target_sources(MemoryAllocatorSources INTERFACE
-	Hello.cpp)
+target_sources(MemoryManagerDemo PRIVATE main.cpp)
